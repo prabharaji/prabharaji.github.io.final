@@ -30,9 +30,11 @@ console.log("global");
 function Seat(props){
 
     const location = useLocation();
-    let [deleteToggle,dseat] = location.state;
+    const deleteInfo = location.state;
 
-    // console.log(sName);
+
+    // console.log(deleteInfo);
+    // console.log(dseat);
 
     const {btnToggle, setBtnToggle} = useContext(ToggleContext);
     const {formToggle, setFormToggle, submitToggle, setSubmitToggle} = useContext(FormContext);
@@ -50,13 +52,12 @@ function Seat(props){
     // const bookedSeatsNoTempObj = localStorage.getItem("bookedSeatsNoTemp");
     // let bookedSeatsNoTemp = JSON.parse(bookedSeatsNoTempObj);
 
-    deleteToggle = false;
-
     useEffect(()=>{
         console.log("initial render");
         // if(bookedSeatsNoTempObj!==null){
         //     bookedSeatsNoTemp=[];
         // }
+        
 
         if(bookedSeatsNoObj!==null){
             lsSeats=bookedSeatsNo;
@@ -71,27 +72,31 @@ function Seat(props){
             
     },[]);
 
+    
     useEffect(()=>{
-        console.log("deleteTog");
-        console.log(deleteToggle);
-        if(deleteToggle){
-            seatArr = dseat;
-            console.log(seatArr);
-            console.log("useEffect-deleteToggle True");
-            if(seatArr!==null){
-                seatArr.map((item) =>{
-                    if(item===props.number){
-                        console.log(item);
-                        setSeatStatus(false);
-                        setSeatColor("seat-a");
-                        setSeatAlive(false);
-                    } 
-                });
+        console.log("deleteInfo");
+        console.log(deleteInfo);
+        if(deleteInfo!==null){
+            const [deleteToggle, dseat] = deleteInfo;
+            if(deleteToggle){
+                seatArr = dseat;
+                console.log(seatArr);
+                console.log("useEffect-deleteToggle True");
+                if(seatArr!==null){
+                    seatArr.map((item) =>{
+                        if(item===props.number){
+                            console.log(item);
+                            setSeatStatus(false);
+                            setSeatColor("seat-a");
+                            setSeatAlive(false);
+                        } 
+                    });
+                }
+    
             }
-
         }
-        
-    },[deleteToggle]);
+                    
+    },[deleteInfo]);
 
 
     useEffect(()=>{
